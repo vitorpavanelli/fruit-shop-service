@@ -1,8 +1,8 @@
-package com.devbox.fruitshop.exception;
+package com.devbox.fruitshop.exceptions;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import com.devbox.fruitshop.exception.model.ProblemDetailBuilder;
+import com.devbox.fruitshop.exceptions.model.ProblemDetailBuilder;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponseException;
 

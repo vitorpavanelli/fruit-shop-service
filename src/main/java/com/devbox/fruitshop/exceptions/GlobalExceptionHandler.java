@@ -1,4 +1,4 @@
-package com.devbox.fruitshop.exception;
+package com.devbox.fruitshop.exceptions;
 
 import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.ERROR_MESSAGE_NOT_READABLE;
 import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.ERROR_VALIDATION_ERROR;
@@ -6,7 +6,7 @@ import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import com.devbox.fruitshop.exception.model.ProblemDetailBuilder;
+import com.devbox.fruitshop.exceptions.model.ProblemDetailBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;

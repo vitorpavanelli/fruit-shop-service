@@ -11,7 +11,7 @@ import com.devbox.fruitshop.controllers.vo.product.request.creation.ProductCreat
 import com.devbox.fruitshop.controllers.vo.product.request.update.ProductUpdateRequest;
 import com.devbox.fruitshop.controllers.vo.product.response.creation.ProductCreationResponse;
 import com.devbox.fruitshop.controllers.vo.product.response.edition.ProductUpdateResponse;
-import com.devbox.fruitshop.exception.ProductNotFoundException;
+import com.devbox.fruitshop.exceptions.ProductNotFoundException;
 import com.devbox.fruitshop.repositories.ProductRepository;
 import com.devbox.fruitshop.services.mappers.ProductMapper;
 import org.slf4j.Logger;
