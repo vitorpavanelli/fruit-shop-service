@@ -25,7 +25,7 @@ public class Order {
   @Column(nullable = false)
   private Long id;
 
-  private BigDecimal totalAmount;
+  private BigDecimal totalAmount = new BigDecimal(0);
 
   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, orphanRemoval = true)
   private List<OrderLine> orderLines;

@@ -13,6 +13,7 @@ import com.devbox.fruitshop.controllers.vo.product.response.creation.ProductCrea
 import com.devbox.fruitshop.controllers.vo.product.response.edition.ProductUpdateResponse;
 import com.devbox.fruitshop.exceptions.ProductNotFoundException;
 import com.devbox.fruitshop.repositories.ProductRepository;
+import com.devbox.fruitshop.repositories.models.Product;
 import com.devbox.fruitshop.services.mappers.ProductMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,4 +61,5 @@ public class ProductService {
     LOGGER.info(INFO_DELETING, PRODUCT, id);
     repository.deleteById(id);
   }
+
 }

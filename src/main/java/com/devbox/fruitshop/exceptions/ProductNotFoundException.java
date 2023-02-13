@@ -6,9 +6,16 @@ import com.devbox.fruitshop.exceptions.model.ProblemDetailBuilder;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponseException;
 
+import java.util.List;
+import java.util.StringJoiner;
+
 public class ProductNotFoundException extends ErrorResponseException {
   public ProductNotFoundException(final Long id) {
     super(NOT_FOUND, getProblemDetail(id), null);
+  }
+
+  public ProductNotFoundException(final List<String> ids) {
+    super(NOT_FOUND, getProblemDetail(ids), null);
   }
 
   private static ProblemDetail getProblemDetail(final Long id) {
@@ -18,5 +25,15 @@ public class ProductNotFoundException extends ErrorResponseException {
         .withType("http://localhost:8080/errors/not-found")
         .withDetail("Product with id %s not found".formatted(id))
         .build();
+  }
+
+  private static ProblemDetail getProblemDetail(final List<String> ids) {
+    final var formattedIds = String.join(", ", ids);
+    return new ProblemDetailBuilder(NOT_FOUND)
+            .withDefaultInfo()
+            .withTitle("Product not found")
+            .withType("http://localhost:8080/errors/not-found")
+            .withDetail("Product with ids %s not found".formatted(formattedIds))
+            .build();
   }
 }
