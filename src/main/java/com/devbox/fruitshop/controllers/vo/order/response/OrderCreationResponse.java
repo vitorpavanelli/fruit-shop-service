@@ -5,4 +5,4 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public record OrderCreationResponse(
-    BigDecimal totalAmount, List<OrderLineCreationRequest> orderLines) {}
+    Long id, BigDecimal totalAmount, List<OrderLineCreationResponse> orderLines) {}

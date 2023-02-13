@@ -20,6 +20,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 @Service
 public class OrderService {
@@ -41,29 +42,35 @@ public class OrderService {
     LOGGER.info(INFO_CREATING, ORDER);
     LOGGER.debug(DEBUG_CREATING, ORDER, orderCreationRequest);
 
-    final var order = new Order();
-    final var productIds = new ArrayList<String>();
-    for (final var item : orderCreationRequest.orderLines()) {
-      final var optionalProduct = productRepository.findById(item.productId());
-      if (optionalProduct.isEmpty()) {
-        productIds.add(item.productId().toString());
-      }
+    final var missingProducts = new ArrayList<String>();
+    final var order = buildOrder(orderCreationRequest, missingProducts);
+    validateProduct(missingProducts);
 
-      final var product = optionalProduct.get();
+    repository.save(order);
 
-      addOrderLine(order, product, item.amount());
-    }
-
-    validateProduct(productIds);
-
-    // TODO order persistence
-
-    return null;
+    return mapper.toOrderCreationResponse(order);
   }
 
   public void deleteOrder(final Long id) {
     LOGGER.info(INFO_DELETING, ORDER, id);
     repository.deleteById(id);
+  }
+
+  private Order buildOrder(
+      final OrderCreationRequest orderCreationRequest, final List<String> missingProducts) {
+    final var order = new Order();
+    for (final var item : orderCreationRequest.orderLines()) {
+      final var optionalProduct = productRepository.findById(item.productId());
+      if (optionalProduct.isEmpty()) {
+        missingProducts.add(item.productId().toString());
+
+      } else {
+        final var product = optionalProduct.get();
+        addOrderLine(order, product, item.amount());
+      }
+    }
+
+    return order;
   }
 
   private void addOrderLine(final Order order, final Product product, final BigDecimal amount) {
@@ -74,14 +81,16 @@ public class OrderService {
     orderLine.setAmount(amount);
 
     order.getOrderLines().add(orderLine);
-    order.getTotalAmount().add(product.getPrice());
+    order.setTotalAmount(order.getTotalAmount().add(orderLine.getPrice()));
   }
 
   private void validateProduct(final List<String> ids) {
     // this validation is not really necessary, but I added only to have something to double-check
     // the product existence
     // in h2 db for this sample application. It can be improved to something better.
-    final var idStringList = ids.stream().map(String::valueOf).toList();
-    throw new ProductNotFoundException(idStringList);
+    if (!CollectionUtils.isEmpty(ids)) {
+      final var idStringList = ids.stream().map(String::valueOf).toList();
+      throw new ProductNotFoundException(idStringList);
+    }
   }
 }

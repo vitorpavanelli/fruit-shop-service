@@ -9,7 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,5 +31,5 @@ public class Order {
   private BigDecimal totalAmount = new BigDecimal(0);
 
   @OneToMany(mappedBy = "order", fetch = FetchType.LAZY, orphanRemoval = true)
-  private List<OrderLine> orderLines;
+  private Set<OrderLine> orderLines = new HashSet<>();
 }
