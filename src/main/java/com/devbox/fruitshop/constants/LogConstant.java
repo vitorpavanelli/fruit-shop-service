@@ -20,6 +20,7 @@ public final class LogConstant {
     private GlobalExceptionHandler() {}
 
     public static final String INFO_NOT_FOUND = "Not found";
+    public static final String ERROR_DELETING = "Error deleting";
     public static final String ERROR_VALIDATION_ERROR = "Validation error";
     public static final String ERROR_MESSAGE_NOT_READABLE = "Message not readable";
   }

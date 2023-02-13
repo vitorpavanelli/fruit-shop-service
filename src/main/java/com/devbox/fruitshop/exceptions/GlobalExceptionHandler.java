@@ -1,12 +1,13 @@
-package com.devbox.fruitshop.exception;
+package com.devbox.fruitshop.exceptions;
 
+import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.ERROR_DELETING;
 import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.ERROR_MESSAGE_NOT_READABLE;
 import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.ERROR_VALIDATION_ERROR;
 import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.INFO_NOT_FOUND;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import com.devbox.fruitshop.exception.model.ProblemDetailBuilder;
+import com.devbox.fruitshop.exceptions.model.ProblemDetailBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -30,6 +31,12 @@ public final class GlobalExceptionHandler extends ResponseEntityExceptionHandler
   @ExceptionHandler(ProductNotFoundException.class)
   ProblemDetail handleNotFoundException(final ErrorResponseException exception) {
     LOGGER.info(INFO_NOT_FOUND, exception);
+    return exception.getBody();
+  }
+
+  @ExceptionHandler(ProductDeletionException.class)
+  ProblemDetail handleProductDeletionException(final ErrorResponseException exception) {
+    LOGGER.error(ERROR_DELETING, exception);
     return exception.getBody();
   }
 

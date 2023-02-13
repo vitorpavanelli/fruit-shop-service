@@ -1,4 +1,4 @@
-package com.devbox.fruitshop.exception.model;
+package com.devbox.fruitshop.exceptions.model;
 
 import static java.time.ZoneOffset.UTC;
 

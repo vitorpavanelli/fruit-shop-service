@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +25,6 @@ public class Product {
   private String name;
   private BigDecimal price;
 
-  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
-  private List<OrderLine> orderLines;
+  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+  private List<OrderLine> orderLines = new ArrayList<>();
 }

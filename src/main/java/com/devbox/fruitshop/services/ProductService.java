@@ -11,8 +11,10 @@ import com.devbox.fruitshop.controllers.vo.product.request.creation.ProductCreat
 import com.devbox.fruitshop.controllers.vo.product.request.update.ProductUpdateRequest;
 import com.devbox.fruitshop.controllers.vo.product.response.creation.ProductCreationResponse;
 import com.devbox.fruitshop.controllers.vo.product.response.edition.ProductUpdateResponse;
-import com.devbox.fruitshop.exception.ProductNotFoundException;
+import com.devbox.fruitshop.exceptions.ProductDeletionException;
+import com.devbox.fruitshop.exceptions.ProductNotFoundException;
 import com.devbox.fruitshop.repositories.ProductRepository;
+import com.devbox.fruitshop.repositories.models.Product;
 import com.devbox.fruitshop.services.mappers.ProductMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +49,7 @@ public class ProductService {
     LOGGER.info(INFO_UPDATING, PRODUCT, id);
     LOGGER.debug(DEBUG_UPDATING, PRODUCT, id, productUpdateRequest);
 
-    final var product = repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
+    final var product = findProduct(id);
     product.setName(productUpdateRequest.name());
     product.setPrice(productUpdateRequest.price());
 
@@ -58,6 +60,15 @@ public class ProductService {
 
   public void deleteProduct(final Long id) {
     LOGGER.info(INFO_DELETING, PRODUCT, id);
+    final var product = findProduct(id);
+    if (product.getOrderLines().size() > 0) {
+      throw new ProductDeletionException(id);
+    }
+
     repository.deleteById(id);
+  }
+
+  private Product findProduct(final Long id) {
+    return repository.findById(id).orElseThrow(() -> new ProductNotFoundException(id));
   }
 }
