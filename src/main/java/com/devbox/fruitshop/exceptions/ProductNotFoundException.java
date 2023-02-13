@@ -3,11 +3,9 @@ package com.devbox.fruitshop.exceptions;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import com.devbox.fruitshop.exceptions.model.ProblemDetailBuilder;
+import java.util.List;
 import org.springframework.http.ProblemDetail;
 import org.springframework.web.ErrorResponseException;
-
-import java.util.List;
-import java.util.StringJoiner;
 
 public class ProductNotFoundException extends ErrorResponseException {
   public ProductNotFoundException(final Long id) {
@@ -30,10 +28,10 @@ public class ProductNotFoundException extends ErrorResponseException {
   private static ProblemDetail getProblemDetail(final List<String> ids) {
     final var formattedIds = String.join(", ", ids);
     return new ProblemDetailBuilder(NOT_FOUND)
-            .withDefaultInfo()
-            .withTitle("Product not found")
-            .withType("http://localhost:8080/errors/not-found")
-            .withDetail("Product with ids %s not found".formatted(formattedIds))
-            .build();
+        .withDefaultInfo()
+        .withTitle("Product not found")
+        .withType("http://localhost:8080/errors/not-found")
+        .withDetail("Product with ids %s not found".formatted(formattedIds))
+        .build();
   }
 }

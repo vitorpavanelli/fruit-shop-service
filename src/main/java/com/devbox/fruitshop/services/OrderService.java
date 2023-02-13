@@ -14,14 +14,12 @@ import com.devbox.fruitshop.repositories.models.Order;
 import com.devbox.fruitshop.repositories.models.OrderLine;
 import com.devbox.fruitshop.repositories.models.Product;
 import com.devbox.fruitshop.services.mappers.OrderMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderService {
@@ -30,7 +28,10 @@ public class OrderService {
   private final ProductRepository productRepository;
   private final OrderMapper mapper;
 
-  public OrderService(final OrderRepository repository, final ProductRepository productRepository, final OrderMapper mapper) {
+  public OrderService(
+      final OrderRepository repository,
+      final ProductRepository productRepository,
+      final OrderMapper mapper) {
     this.repository = repository;
     this.productRepository = productRepository;
     this.mapper = mapper;
@@ -55,7 +56,7 @@ public class OrderService {
 
     validateProduct(productIds);
 
-    //TODO order persistence
+    // TODO order persistence
 
     return null;
   }
@@ -77,8 +78,9 @@ public class OrderService {
   }
 
   private void validateProduct(final List<String> ids) {
-    //this validation is not really necessary, but I added only to have something to double-check the product existence
-    //in h2 db for this sample application. It can be improved to something better.
+    // this validation is not really necessary, but I added only to have something to double-check
+    // the product existence
+    // in h2 db for this sample application. It can be improved to something better.
     final var idStringList = ids.stream().map(String::valueOf).toList();
     throw new ProductNotFoundException(idStringList);
   }
