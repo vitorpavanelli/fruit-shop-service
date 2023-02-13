@@ -1,5 +1,6 @@
 package com.devbox.fruitshop.exceptions;
 
+import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.ERROR_DELETING;
 import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.ERROR_MESSAGE_NOT_READABLE;
 import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.ERROR_VALIDATION_ERROR;
 import static com.devbox.fruitshop.constants.LogConstant.GlobalExceptionHandler.INFO_NOT_FOUND;
@@ -30,6 +31,12 @@ public final class GlobalExceptionHandler extends ResponseEntityExceptionHandler
   @ExceptionHandler(ProductNotFoundException.class)
   ProblemDetail handleNotFoundException(final ErrorResponseException exception) {
     LOGGER.info(INFO_NOT_FOUND, exception);
+    return exception.getBody();
+  }
+
+  @ExceptionHandler(ProductDeletionException.class)
+  ProblemDetail handleProductDeletionException(final ErrorResponseException exception) {
+    LOGGER.error(ERROR_DELETING, exception);
     return exception.getBody();
   }
 

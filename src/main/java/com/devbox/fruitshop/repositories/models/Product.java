@@ -25,6 +25,6 @@ public class Product {
   private String name;
   private BigDecimal price;
 
-  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, orphanRemoval = true)
+  @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
   private List<OrderLine> orderLines = new ArrayList<>();
 }
