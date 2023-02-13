@@ -53,7 +53,9 @@ public class OrderService {
       addOrderLine(order, product, item.amount());
     }
 
+    validateProduct(productIds);
 
+    //TODO order persistence
 
     return null;
   }
@@ -74,15 +76,10 @@ public class OrderService {
     order.getTotalAmount().add(product.getPrice());
   }
 
-  private void validateProduct(final List<Long> ids) {
+  private void validateProduct(final List<String> ids) {
     //this validation is not really necessary, but I added only to have something to double-check the product existence
     //in h2 db for this sample application. It can be improved to something better.
-    final var products = repository.findAllById(ids);
-    if (products.size() != ids.size()) {
-      products.forEach(order -> ids.remove(order.getId()));
-      final var idStringList = ids.stream().map(String::valueOf).toList();
-
-      throw new ProductNotFoundException(idStringList);
-    }
+    final var idStringList = ids.stream().map(String::valueOf).toList();
+    throw new ProductNotFoundException(idStringList);
   }
 }
