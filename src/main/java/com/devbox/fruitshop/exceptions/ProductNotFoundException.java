@@ -15,7 +15,7 @@ public class ProductNotFoundException extends ErrorResponseException {
     return new ProblemDetailBuilder(NOT_FOUND)
         .withDefaultInfo()
         .withTitle("Product not found")
-        .withType("http://localhost:8080/errors/not-foundt")
+        .withType("http://localhost:8080/errors/not-found")
         .withDetail("Product with id %s not found".formatted(id))
         .build();
   }
